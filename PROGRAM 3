@@ -121,3 +121,4 @@ mysql> SHOW GRANTS FOR user2@'localhost';
 +----------------------------------------------------+
 2 rows in set (0.00 sec)
 
+//VERIFIED
