@@ -84,10 +84,26 @@ Give insert and select privilege to user 1 on customer table in the invoice data
 mysql> GRANT SELECT, INSERT ON INVOICE.customer TO 'user1'@'localhost';
 Query OK, 0 rows affected (0.00 sec)
 
++---------------------------------------------------------------------+
+| Grants for user1@localhost                                          |
++---------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `user1`@`localhost`                           |
+| GRANT SELECT, INSERT ON `INVOICE`.`customer` TO `user1`@`localhost` |
++---------------------------------------------------------------------+
+
 Give update and delete privilege to user 2 on all tables in the invoice database.
 
 mysql> GRANT UPDATE, DELETE ON invoice.* TO 'user2'@'localhost';
 Query OK, 0 rows affected (0.00 sec)
+mysql> SHOW GRANTS FOR user2@'localhost';
++------------------------------------------------------------+
+| Grants for user2@localhost                                 |
++------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `user2`@`localhost`                  |
+| GRANT UPDATE, DELETE ON `invoice`.* TO `user2`@`localhost` |
++------------------------------------------------------------+
+2 rows in set (0.00 sec)
+
 
 2.              REVOKE
 
@@ -96,4 +112,12 @@ Remove delete privilege of user 2.
 REVOKE DELETE ON invoice.* FROM 'user2'@'localhost';
 Query OK, 0 rows affected (0.00 sec)
 
+mysql> SHOW GRANTS FOR user2@'localhost';
++----------------------------------------------------+
+| Grants for user2@localhost                         |
++----------------------------------------------------+
+| GRANT USAGE ON *.* TO `user2`@`localhost`          |
+| GRANT UPDATE ON `invoice`.* TO `user2`@`localhost` |
++----------------------------------------------------+
+2 rows in set (0.00 sec)
 
