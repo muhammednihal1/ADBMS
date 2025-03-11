@@ -1,0 +1,99 @@
+a) TCL COMMANDS  
+
+mysql> set autocommit=off;
+Query OK, 0 rows affected (0.00 sec)
+mysql> use INVOICE;
+
+mysql> create table stud(name varchar(15),age int);
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> insert into stud values('linto',18);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from stud;
++-------+------+
+| name  | age  |
++-------+------+
+| linto |   18 |
++-------+------+
+
+mysql> insert into stud values("linto",18);
+Query OK, 1 row affected (0.00 sec)
+
+   1.    Commit
+
+mysql> commit;
+Query OK, 0 rows affected (0.00 sec)
+
+   2.    Rollback
+   
+delete from table stud where age=18;
+mysql> rollback;
+Query OK, 0 rows affected (0.00 sec)
+
+   3.    Savepoint
+mysql> insert into stud values('ss',2);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> savepoint s1;
+Query OK, 0 rows affected (0.00 sec)
+
+
+mysql> insert into stud values('se',3);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> savepoint s2;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from stud;
++-------+------+
+| name  | age  |
++-------+------+
+| linto |   18 |
+| ss    |    2 |
+| se    |    3 |
++-------+------+
+3 rows in set (0.00 sec)
+
+
+mysql> rollback to s1;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from stud;
++-------+------+
+| name  | age  |
++-------+------+
+| linto |   18 |
+| ss    |    2 |
++-------+------+
+3 rows in set (0.00 sec)
+
+b) DCL COMMAND
+ Create two users user1, user2
+ 
+mysql> CREATE USER user1@'localhost' IDENTIFIED BY 'user1';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> CREATE USER user2@'localhost' IDENTIFIED BY 'user2';
+Query OK, 0 rows affected (0.02 sec)
+
+1.              GRANT
+
+Give insert and select privilege to user 1 on customer table in the invoice database.
+
+mysql> GRANT SELECT, INSERT ON INVOICE.customer TO 'user1'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+
+Give update and delete privilege to user 2 on all tables in the invoice database.
+
+mysql> GRANT UPDATE, DELETE ON invoice.* TO 'user2'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+
+2.              REVOKE
+
+Remove delete privilege of user 2.
+
+REVOKE DELETE ON invoice.* FROM 'user2'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+
+
