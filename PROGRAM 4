@@ -12,7 +12,7 @@ mysql> SELECT * FROM invoiceitem;
 |   101 |    3 |        5 |
 +-------+------+----------+
 6 rows in set (0.00 sec)
-
+ 
 mysql> select * from invoicemaster;
 +-------+--------+------------+
 | invid | custid | invdate    |
