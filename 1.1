@@ -46,7 +46,15 @@ desc invoicemaster;
 
 create table invoiceitem (invid int, pid int, quantity int, primary key (invid, pid), foreign key (invid) references invoicemaster(invid), foreign key (pid) references product(pid));
 
-create table invoiceitem (invid int, pid int, quantity int, primary key (invid, pid), foreign key (invid) references invoicemaster(invid), foreign key (pid) references product(pid));
+mysql> DESC invoiceitem;
++----------+------+------+-----+---------+-------+
+| Field    | Type | Null | Key | Default | Extra |
++----------+------+------+-----+---------+-------+
+| invid    | int  | YES  | MUL | NULL    |       |
+| pid      | int  | YES  | MUL | NULL    |       |
+| quantity | int  | YES  |     | NULL    |       |
++----------+------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
 
 b)      DDL-ALTER & DROP
 
@@ -129,3 +137,4 @@ ALTER TABLE EMPLOYEE RENAME TO PERSON;
  drop table student1;
 
 //RESUBMIT
+//added invoice item description
