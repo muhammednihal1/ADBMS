@@ -1,0 +1,68 @@
+b) OPTIMIZING DATABASE:  (GROUP BY, AGGREGATE FUNCTIONS) 
+
+1.List product name, price except soap on price order.
+
+mysql> SELECT pname,price from product where pname<>'soap' order by price desc;
++--------+-------+
+| pname  | price |
++--------+-------+
+| pencil | 80.00 |
+| pen    | 50.00 |
++--------+-------+
+2 rows in set (0.00 sec)
+
+
+2.Find minimum, maximum and average price of products.
+
+mysql> SELECT min(price),max(price),avg(price) from product;
++------------+------------+------------+
+| min(price) | max(price) | avg(price) |
++------------+------------+------------+
+|      50.00 |     150.00 |  93.333333 |
++------------+------------+------------+
+1 row in set (0.00 sec)
+
+
+
+3.Find number of customers in each city.
+
+mysql> select count(id) as count,city from customer group by city;
++-------+----------+
+| count | city     |
++-------+----------+
+|     2 | calicut  |
+|     1 | tvm      |
+|     1 | kottayam |
+|     1 | wayandu  |
++-------+----------+
+4 rows in set (0.00 sec)
+
+
++-------+---------+
+3 rows in set (0.00 sec)
+
+4.Find number of customers in each city, only include city with more than or equal 2 customers.
+
+mysql> select count(id) as count,city from customer group by city having count(city)>=2;
++-------+---------+
+| count | city    |
++-------+---------+
+|     2 | calicut |
++-------+---------+
+1 row in set (0.01 sec)
+
+5. Show data as displayed ‘who, where’ Eg: ‘customer1 lives in ekm’
+
+mysql> select concat(name ," lives in ",city) as data from customer;
++--------------------------+
+| data                     |
++--------------------------+
+| linto lives in calicut   |
+| roshan lives in tvm      |
+| jaseem lives in kottayam |
+| aswin lives in wayandu   |
+| sanin lives in calicut   |
++--------------------------+
+5 rows in set (0.00 sec)
+
+
