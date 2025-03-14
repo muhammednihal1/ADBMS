@@ -66,3 +66,4 @@ mysql> select concat(name ," lives in ",city) as data from customer;
 5 rows in set (0.00 sec)
 
 
+//VERIFIED
