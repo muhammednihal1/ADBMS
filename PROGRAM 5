@@ -81,3 +81,4 @@ mysql> select name from customer where id in(select custid from invoicemaster wh
 +-------+
 3 rows in set (0.00 sec)
 
+//VERIFIED
