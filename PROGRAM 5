@@ -1,0 +1,83 @@
+RECORD PROGRAM 5- ACCESSING DATABASE- SUBQUERY
+
+
+
+1. List the product name and price of each invoice item.  
+
+mysql> select pname,price from product where pid in(select pid from invoiceitem);
++--------+--------+
+| pname  | price  |
++--------+--------+
+| pen    |  50.00 |
+| pencil |  80.00 |
+| soap   | 150.00 |
++--------+--------+
+3 rows in set (0.00 sec)
+
+ 
+2. List the product names, only include their purchased quantity more than 3.
+
+mysql> select pname from product where pid in(select pid from invoiceitem where quantity>3);
++--------+
+| pname  |
++--------+
+| pen    |
+| pencil |
+| soap   |
++--------+
+3 rows in set (0.00 sec)
+
+
+3. Find the product that has no sale.
+mysql> select pname from product where pid not in (select pid from invoiceitem);
+
+mysql> select pname from product where pid not in (select pid from invoiceitem);
++--------+
+| pname  |
++--------+
+| eraser |
++--------+
+1 row in set (0.00 sec)
+
+4.List the customer names who purchased the items ‘pen’ and ‘soap’.
+
+
+mysql> select name from customer where id in(select custid from invoicemaster where invid in(select invid from invoiceitem where pid=1 or pid=3));
+
++-------+
+| name  |
++-------+
+| aysha |
+| aswin |
+| sanin |
++-------+
+3 rows in set (0.01 sec)
+
+
+5. Display the purchased product details of the customer ’xyz’.
+
+mysql> select * from product where pid in (select pid from invoiceitem where invid in (select invid from invoicemaster where custid in(select id from customer where name='sanin') ));
+
++-----+--------+--------+
+| pid | pname  | price  |
++-----+--------+--------+
+|   1 | pen    |  50.00 |
+|   2 | pencil |  80.00 |
+|   3 | soap   | 150.00 |
++-----+--------+--------+
+3 rows in set (0.00 sec)
+
+
+
+6. List the names of all customers who have purchased at least 2 products, make sure that no duplicate names in the result.
+
+mysql> select name from customer where id in(select custid from invoicemaster where invid in (select invid from invoiceitem group by invid having count(invid>=2)));
++-------+
+| name  |
++-------+
+| aysha |
+| aswin |
+| sanin |
++-------+
+3 rows in set (0.00 sec)
+
