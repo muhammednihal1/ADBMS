@@ -1,0 +1,113 @@
+OPTIMIZING DATABASE: (JOINS)
+
+1. List the product name and quantity of invoice items. 
+
+mysql> select P.pname,II.quantity from invoiceitem II inner join product P
+ on P.pid=II.pid;
++--------+----------+
+| pname  | quantity |
++--------+----------+
+| pen    |        6 |
+| pen    |        5 |
+| pencil |        8 |
+| pencil |        8 |
+| soap   |       10 |
+| soap   |        5 |
++--------+----------+
+6 rows in set (0.00 sec)
+
+
+2.    Display invoice details of the transaction dated ’29-03-2023’. 
+
+mysql> select * from invoicemaster IM join invoiceitem II on IM.invid=II.invid where invdate='2023-03-29';
++-------+--------+------------+-------+------+----------+
+| invid | custid | invdate    | invid | pid  | quantity |
++-------+--------+------------+-------+------+----------+
+|   101 |  10002 | 2023-03-29 |   101 |    2 |        8 |
+|   101 |  10002 | 2023-03-29 |   101 |    3 |        5 |
++-------+--------+------------+-------+------+----------+
+2 rows in set (0.00 sec)
+
+
+
+3.    Display the customer name, product name, invoice date of purchased item ‘pen’.
+
+mysql>  select C.name,P.pname,IM.invdate from invoicemaster IM inner join
+customer C on C.id=IM.custid inner join invoiceitem II on IM.invid=II.invid inner join product P on P.pid=II.pid where P.pname='pen';
++-------+-------+------------+
+| name  | pname | invdate    |
++-------+-------+------------+
+| aswin | pen   | 2023-03-11 |
+| sanin | pen   | 2023-09-23 |
++-------+-------+------------+
+2 rows in set (0.00 sec)
+
+
+4.Display all customer details and invoice details must include customer has not purchased items.
+
+mysql> select C.id,C.name,IM.invid,IM.invdate from customer C left join invoicemaster IM on IM.custid=C.id;
++-------+--------+-------+------------+
+| id    | name   | invid | invdate    |
++-------+--------+-------+------------+
+| 10002 | aysha  |   101 | 2023-03-29 |
+| 10003 | roshan |   103 | 2024-12-31 |
+| 10004 | jaseem |  NULL | NULL       |
+| 10005 | aswin  |   102 | 2023-09-23 |
+| 10005 | aswin  |   108 | 2023-03-11 |
+| 10006 | sanin  |   104 | 2023-09-23 |
++-------+--------+-------+------------+
+6 rows in set (0.00 sec)
+
+
+
+OPTIMIZING DATABASE: (Using Set, arithmetic, logical and special operators)
+
+1.Display customer_id, city  who lives either in ‘Pala’ or in ‘calicut’
+
+mysql> select name,city from customer where city='pala' or city='calicut'; 
++-------+---------+
+| name  | city    |
++-------+---------+
+| aysha | calicut |
+| sanin | calicut |
++-------+---------+
+2 rows in set (0.00 sec)
+
+
+2.Display product details with an updated price amount(new price= old price+5rs)
+
+mysql> select pid,pname,price+5 as price from product;
++-----+--------+--------+
+| pid | pname  | price  |
++-----+--------+--------+
+|   1 | pen    |  55.00 |
+|   2 | pencil |  85.00 |
+|   3 | soap   | 155.00 |
+|   4 | eraser |  15.00 |
++-----+--------+--------+
+4 rows in set (0.00 sec)
+
+
+3.Display customer details who doesn’t have phone number and lives in ‘Calicut’ city (use logical operators)
+
+mysql> select * from customer where city='calicut' and phno is null;
++-------+-------+---------+---------+------+
+| id    | name  | address | city    | phno |
++-------+-------+---------+---------+------+
+| 10006 | sanin | karil   | calicut | NULL |
++-------+-------+---------+---------+------+
+1 row in set (0.00 sec)
+
+
+4.List the product names if it finds any records in the invoice items table has quantity =3 (use special operators)
+
+mysql> select pname from product P where exists(select pid from invoiceitem II where P.pid=II.pid and quantity=5);
++-------+
+| pname |
++-------+
+| pen   |
+| soap  |
++-------+
+2 rows in set (0.00 sec)
+
+
