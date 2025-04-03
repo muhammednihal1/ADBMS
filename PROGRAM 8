@@ -1,0 +1,107 @@
+PL/SQL PROGRAMS- STORED PROCEDURES
+
+
+1.      Create a procedure to display all tables in the invoice database.
+
+mysql> delimiter //
+mysql> create procedure tables()
+    ->      begin
+    ->      select * from customer;
+    ->      select * from invoicemaster;
+    ->      select * from invoiceitem;
+    ->      select * from product;
+    ->      end //
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> delimiter ;
+mysql> call tables();
++-------+--------+---------+----------+------------+
+| id    | name   | address | city     | phno       |
++-------+--------+---------+----------+------------+
+| 10002 | aysha  | bazar   | calicut  | 7894578945 |
+| 10003 | roshan | newyork | tvm      | NULL       |
+| 10004 | jaseem | pala    | kottayam | 7894578945 |
+| 10005 | aswin  | vayil   | wayandu  | 7894578945 |
+| 10006 | sanin  | karil   | calicut  | NULL       |
++-------+--------+---------+----------+------------+
+5 rows in set (0.01 sec)
+
++-------+--------+------------+
+| invid | custid | invdate    |
++-------+--------+------------+
+|   101 |  10002 | 2023-03-29 |
+|   102 |  10005 | 2023-09-23 |
+|   103 |  10003 | 2024-12-31 |
+|   104 |  10006 | 2023-09-23 |
+|   108 |  10005 | 2023-03-11 |
++-------+--------+------------+
+5 rows in set (0.01 sec)
+
++-------+------+----------+
+| invid | pid  | quantity |
++-------+------+----------+
+|   108 |    1 |        6 |
+|   101 |    2 |        8 |
+|   104 |    2 |        8 |
+|   104 |    3 |       10 |
+|   104 |    1 |        5 |
+|   101 |    3 |        5 |
++-------+------+----------+
+6 rows in set (0.01 sec)
+
++-----+--------+--------+
+| pid | pname  | price  |
++-----+--------+--------+
+|   1 | pen    |  50.00 |
+|   2 | pencil |  80.00 |
+|   3 | soap   | 150.00 |
+|   4 | eraser |  10.00 |
++-----+--------+--------+
+4 rows in set (0.01 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+
+2.Create a procedure to find greatest of 2 numbers.
+
+mysql> delimiter //
+mysql> 
+mysql> create procedure greatest(in a int, in b int)
+    -> begin
+    ->     declare maxval int;    
+    ->     if a >= b then
+    ->     set maxval = a;
+    ->     else 
+    ->     set maxval = b;
+    ->     end if;   
+    ->     select maxval as 'greatest among 2';
+    -> end //
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> delimiter ;
+mysql> call greatest(40,4); 
++------------------+
+| greatest among 2 |
++------------------+
+|               40 |
++------------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+3.Create a procedure to display invoice details of a particular customer.
+
+mysql> create procedure invoicedetails() select II.* from invoiceitem II inner join invoicemaster IM on II.invid=IM.invid inner join customer C on C.id=IM.custid where name='sanin';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> call invoicedetails();
++-------+------+----------+
+| invid | pid  | quantity |
++-------+------+----------+
+|   104 |    2 |        8 |
+|   104 |    3 |       10 |
+|   104 |    1 |        5 |
++-------+------+----------+
+3 rows in set (0.01 sec)
+
+Query OK, 0 rows affected (0.01 sec)
