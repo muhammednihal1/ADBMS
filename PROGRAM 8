@@ -91,19 +91,19 @@ Query OK, 0 rows affected (0.00 sec)
 
 3.Create a procedure to display invoice details of a particular customer.
 
-mysql> create procedure invoicedetails() select II.* from invoiceitem II inner join invoicemaster IM on II.invid=IM.invid inner join customer C on C.id=IM.custid where name='sanin';
-Query OK, 0 rows affected (0.01 sec)
+mysql> CREATE PROCEDURE invoicedetails(IN name VARCHAR(10))  SELECT IM.invid, IM.invdate, P.pname, II.quantity  FROM invoicemaster IM  INNER JOIN invoiceitem II ON IM.invid = II.invid  INNER JOIN product P ON P.pid = II.pid  INNER JOIN customer C ON IM.custid = C.id  WHERE C.name = name;
+Query OK, 0 rows affected (0.00 sec)
 
-mysql> call invoicedetails();
-+-------+------+----------+
-| invid | pid  | quantity |
-+-------+------+----------+
-|   104 |    2 |        8 |
-|   104 |    3 |       10 |
-|   104 |    1 |        5 |
-+-------+------+----------+
-3 rows in set (0.01 sec)
+mysql> CALL invoicedetails('sanin');
++-------+------------+--------+----------+
+| invid | invdate    | pname  | quantity |
++-------+------------+--------+----------+
+|   104 | 2023-09-23 | pen    |        5 |
+|   104 | 2023-09-23 | pencil |        8 |
+|   104 | 2023-09-23 | soap   |       10 |
++-------+------------+--------+----------+
+3 rows in set (0.00 sec)
 
-Query OK, 0 rows affected (0.01 sec)
-//RESUBMIT
-last one need customer name as parameter
+Query OK, 0 rows affected (0.00 sec)
+
+//RESUMBITTED WITH CUSTOMER NAME AS PARAMETER
