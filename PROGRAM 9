@@ -28,3 +28,4 @@ mysql> select pname,price,price_range(price) as price_range from product;
 | eraser |  10.00 | medium      |
 +--------+--------+-------------+
 4 rows in set (0.00 sec)
+//VERIFIED
