@@ -82,3 +82,4 @@ mysql> SELECT * FROM product;
 |   5 | paper  |  25.00 |
 +-----+--------+--------+
 5 rows in set (0.00 sec)
+//VERIFIED
