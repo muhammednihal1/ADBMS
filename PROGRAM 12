@@ -77,4 +77,4 @@ INVOICE> db.customer.deleteOne({"address.city":"calicut"})
 { acknowledged: true, deletedCount: 1 }
 
 
-
+//VERIFIED
