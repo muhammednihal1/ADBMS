@@ -1,0 +1,80 @@
+RECORD PROGRAM 12: NoSQL CRUD
+
+1.      Write a MongoDB query to create an INVOICE database and collections (CUSTOMER, PRODUCT) and its corresponding documents.
+
+test> use INVOICE
+switched to db INVOICE
+INVOICE> db.createCollection("customer")
+{ ok: 1 }
+
+INVOICE> db.customer.insertMany([{customer_id:"1001",name:"linto",address:{place:"newroad",city:"tvm"},phone:"9787946682"},{customer_id:"1002",name:"arya",address:{place:"beach",city:"kochi"},phone:"9845623412"},{customer_id:"1003",name:"roshan",address:{place:"thodu",city:"kollam"},phone:"9597789524"}])
+{
+acknowledged: true,
+insertedIds: {
+    '0': ObjectId('67ff6f25ef0251dac0d861e0'),
+    '1': ObjectId('67ff6f25ef0251dac0d861e1'),
+    '2': ObjectId('67ff6f25ef0251dac0d861e2')
+
+}
+}
+
+INVOICE> db.createCollection("product")
+{ ok: 1 }
+INVOICE> db.product.insertMany([{pid:"101",name:"scale",price:55,stock:10},{pid:"102",name:"pencil",price:10,stock:25},{pid:"103",name:"eraser",price:5,stock:30}])
+
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('67ff6f5fef0251dac0d861e3'),
+    '1': ObjectId('67ff6f5fef0251dac0d861e4'),
+    '2': ObjectId('67ff6f5fef0251dac0d861e5')
+  }
+}
+
+
+2.Write a MongoDB query to find all documents from the collection customer
+
+INVOICE> db.customer.find()
+[
+  {
+    _id: ObjectId('67ff6f25ef0251dac0d861e0'),
+    customer_id: '1001',
+    name: 'linto',
+    address: { place: 'newroad', city: 'tvm' },
+    phone: '9787946682'
+  },
+  {
+    _id: ObjectId('67ff6f25ef0251dac0d861e1'),
+    customer_id: '1002',
+    name: 'arya',
+    address: { place: 'beach', city: 'kochi' },
+    phone: '9845623412'
+  },
+  {
+    _id: ObjectId('67ff6f25ef0251dac0d861e2'),
+    customer_id: '1003',
+    name: 'roshan',
+    address: { place: 'thodu', city: 'kollam' },
+    phone: '9597789524'
+  }
+]
+
+
+3.Write a MongoDB query to update the city in the collection customer.
+
+INVOICE> db.customer.updateOne({customer_id:"1001"},{$set:{"address.city":"calicut"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+4.Write a MongoDB query to delete the first matched document whose city is “calicut”.
+
+INVOICE> db.customer.deleteOne({"address.city":"calicut"})
+{ acknowledged: true, deletedCount: 1 }
+
+
+
