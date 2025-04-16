@@ -1,0 +1,50 @@
+RECORD PROGRAM 13: NoSQL- RETRIEVING DATA
+
+
+ 1.      Write a MongoDB query to display the customer documents having city ‘ekm’,’tvm’.
+
+INVOICE> db.customer.find({"address.city": {$in: ["kochi", "tvm"]}})
+[
+  {
+    _id: ObjectId('67ff6f25ef0251dac0d861e1'),
+    customer_id: '1002',
+    name: 'arya',
+    address: { place: 'beach', city: 'kochi' },
+    phone: '9845623412'
+  }
+]
+
+
+ 2.     Write a MongoDB query to display all product documents their price >50.
+
+INVOICE> db.product.find({ price: { $gt: 50 } })
+[
+  {
+    _id: ObjectId('67ff6f5fef0251dac0d861e3'),
+    pid: '101',
+    name: 'scale',
+    price: 55,
+    stock: 10
+  }
+]
+
+  
+ 3.    Write a MongoDB query to find customer documents who not live in ‘tvm’.
+
+INVOICE> db.customer.find({ "address.city": { $ne: "tvm" } })
+[
+  {
+    _id: ObjectId('67ff6f25ef0251dac0d861e1'),
+    customer_id: '1002',
+    name: 'arya',
+    address: { place: 'beach', city: 'kochi' },
+    phone: '9845623412'
+  },
+  {
+    _id: ObjectId('67ff6f25ef0251dac0d861e2'),
+    customer_id: '1003',
+    name: 'roshan',
+    address: { place: 'thodu', city: 'kollam' },
+    phone: '9597789524'
+  }
+]
