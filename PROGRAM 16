@@ -203,3 +203,4 @@ rs0 [direct: primary] db1> db.customer.find()
   }
 ]
 
+//VERIFIED
